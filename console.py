@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-    Main Console program for HBNB (Hotel Booking and Navigation Booking)
+    Main Console program
 """
 import cmd
 import models
@@ -8,12 +8,11 @@ import re
 
 
 class HBNBCommand(cmd.Cmd):
-    """Command Line Interface for HBNB"""
+    """Console"""
     prompt = "(hbnb) "
 
     @classmethod
     def fetch_command(cls, command):
-        """Fetches the appropriate method for the given command"""
         commands = {"all": cls.do_all, "show": cls.do_show,
                     "destroy": cls.do_destroy, "update": cls.do_update,
                     "count": cls.do_count}
@@ -23,19 +22,19 @@ class HBNBCommand(cmd.Cmd):
             return None
 
     def do_EOF(self, arg):
-        """Exits the program"""
+        """Quit the program"""
         return True
 
     def do_quit(self, arg):
-        """Exits the program"""
+        """Quit the program"""
         return True
 
     def emptyline(self):
-        """Ignores empty inputs to prevent unnecessary execution"""
+        """Ignore empty inputs"""
         pass
 
     def do_create(self, arg):
-        """Creates a new instance of a specified Model"""
+        """Creates a new instance of a Model"""
         if arg:
             try:
                 args = arg.split()
@@ -76,7 +75,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def do_show(self, arg):
-        """Displays the string representation of a specified instance"""
+        """string representation of an instance"""
         if arg:
             arg = arg.split()
             if arg[0] in models.dummy_classes:
@@ -94,7 +93,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def do_destroy(self, arg):
-        """Deletes a specified instance based on the class name and id"""
+        """ Deletes an instance based on the class name and id"""
         if arg:
             arg = arg.split()
             if arg[0] in models.dummy_classes:
@@ -114,7 +113,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def do_all(self, arg):
-        """Displays the string representation of all instances of a specified class"""
+        """string representation of all instances"""
         result = []
         if arg:
             arg = arg.split()
@@ -132,7 +131,7 @@ class HBNBCommand(cmd.Cmd):
             print(result)
 
     def do_update(self, arg):
-        """Updates an instance by adding or updating an attribute"""
+        """Updates an instance adding or updating attribute"""
         if arg:
             arg = arg.split()
             if arg[0] in models.dummy_classes:
@@ -158,7 +157,9 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def do_count(self, arg):
-        """Counts the number of instances of a specified class"""
+        """
+        count number of instances
+        """
         count = 0
         if arg:
             arg = arg.split()
@@ -174,7 +175,10 @@ class HBNBCommand(cmd.Cmd):
         print(count)
 
     def default(self, line):
-        """Handles invalid commands and special commands"""
+        """
+        handle invalid commands and
+        special commands like <class name>.<command>()
+        """
         match = re.fullmatch(r"[A-Za-z]+\.[A-Za-z]+\(.*?\)", line)
         if match:
             splited = line.split('.')
