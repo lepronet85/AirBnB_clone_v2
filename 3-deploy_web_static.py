@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Aug 13 14:21:54 2020
-@author: Robinson Montes
+Module
 """
 from fabric.api import local, put, run, env
 from datetime import datetime
