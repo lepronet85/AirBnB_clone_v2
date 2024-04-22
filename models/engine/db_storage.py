@@ -52,12 +52,6 @@ class DBStorage:
                     objects[obj.__class__.__name__ + '.' + obj.id] = obj
         return objects
 
-    def reload(self):
-        session_factory = sessionmaker(bind=self.__engine,
-                                       expire_on_commit=False)
-        Base.metadata.create_all(self.__engine)
-        self.__session = scoped_session(session_factory)
-
     def new(self, obj):
         self.__session.add(obj)
 
@@ -70,6 +64,16 @@ class DBStorage:
         if obj:
             self.__session.delete(obj)
 
+    def reload(self):
+        """reload the session
+        """
+        Base.metadata.create_all(self.__engine)
+        Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Scope = scoped_session(Session)
+        self.__session = Scope()
+
     def close(self):
-        """Dispose of current session if active"""
-        self.__session.remove()
+        """display our HBNB data
+        """
+        self.__session.__class__.close(self.__session)
+        self.reload()

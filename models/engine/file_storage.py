@@ -47,9 +47,17 @@ class FileStorage:
         with open(self.__file_path, "w") as json_file:
             json.dump(temp, json_file)
 
+    def delete(self, obj=None):
+        """
+        Removes an object from the storage if it exists;
+        does nothing if obj is None.
+        """
+        if (obj):
+	            self.__objects.pop("{}.{}".format(type(obj).__name__, obj.id))
+
     def reload(self):
         """
-        Restores previously saved objects from the JSON file into the storage.
+        update __objects dict to restore previously created objects
         """
         try:
             with open(self.__file_path, "r") as json_file:
@@ -61,15 +69,6 @@ class FileStorage:
             pass
 
     def close(self):
-        """
-        Refreshes the storage by reloading objects from the JSON file.
+        """display our HBNB data
         """
         self.reload()
-
-    def delete(self, obj=None):
-        """
-        Removes an object from the storage if it exists;
-        does nothing if obj is None.
-        """
-        if (obj):
-            self.__objects.pop("{}.{}".format(type(obj).__name__, obj.id))
